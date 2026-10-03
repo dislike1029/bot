@@ -88,3 +88,109 @@ input[type="text"] {
     outline: none;
     transition: all 0.3s ease;
 }
+
+/* ===== КНОПКА "ДОБАВИТЬ" ===== */
+.btn-add {
+    padding: 12px 22px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Comfortaa', Arial, sans-serif;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    background: rgba(76, 175, 80, 0.85);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-add:hover {
+    background: rgba(76, 175, 80, 1);
+    transform: translateY(-2px);
+}
+
+/* ===== СПИСОК ЗАДАЧ ===== */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    font-size: 16px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s ease;
+}
+
+li:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+li span {
+    flex: 1;
+    word-break: break-word;
+}
+
+/* Выполненная задача */
+li.done {
+    opacity: 0.6;
+}
+
+li.done span {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+}
+
+/* ===== КНОПКИ В ЗАДАЧАХ ===== */
+li .btn {
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+    transition: all 0.25s ease;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+li .btn-toggle {
+    background: rgba(76, 175, 80, 0.75);
+}
+
+li .btn-toggle:hover {
+    background: rgba(76, 175, 80, 1);
+    transform: translateY(-2px);
+}
+
+li .btn-delete {
+    background: rgba(229, 57, 53, 0.75);
+}
+
+li .btn-delete:hover {
+    background: rgba(229, 57, 53, 1);
+    transform: translateY(-2px);
+}
+
+/* Сообщение "Пока нет задач" */
+li:only-child {
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.85);
+    font-style: italic;
+}
