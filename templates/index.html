@@ -11,21 +11,61 @@
 
     <form action="/add" method="post">
         <input type="text" name="task" placeholder="Что нужно сделать?" required>
+        <input type="text" name="kategoriya" placeholder="Категория" class="input-kat">
         <button type="submit" class="btn-add">Добавить</button>
     </form>
 
+    <div class="filtry">
+        <a href="/?filtr=vse{% if kat %}&kat={{ kat }}{% endif %}" class="filtr {{ 'active' if filtr == 'vse' }}">Все</a>
+        <a href="/?filtr=aktivnye{% if kat %}&kat={{ kat }}{% endif %}" class="filtr {{ 'active' if filtr == 'aktivnye' }}">Активные</a>
+        <a href="/?filtr=vypolnennye{% if kat %}&kat={{ kat }}{% endif %}" class="filtr {{ 'active' if filtr == 'vypolnennye' }}">Выполненные</a>
+        <a href="/?filtr=segodnya{% if kat %}&kat={{ kat }}{% endif %}" class="filtr {{ 'active' if filtr == 'segodnya' }}">Сегодня</a>
+    </div>
+
+    {% if kategorii %}
+    <div class="filtry">
+        <a href="/?filtr={{ filtr }}" class="filtr {{ 'active' if not kat }}">Все категории</a>
+        {% for k in kategorii %}
+        <a href="/?filtr={{ filtr }}&kat={{ k }}" class="filtr {{ 'active' if kat == k }}">{{ k }}</a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <ul>
-        {% for zadacha in zadachi %}
-        <li class="{{ 'done' if zadacha.sdelano }}">
-            <span>{{ zadacha.tekst }}</span>
-            <a href="/toggle/{{ loop.index0 }}" class="btn btn-toggle">
-                {{ 'Вернуть' if zadacha.sdelano else 'Готово' }}
-            </a>
-            <a href="/delete/{{ loop.index0 }}" class="btn btn-delete">Удалить</a>
+        {% for z in zadachi %}
+        <li class="{{ 'done' if z.sdelano }}">
+            <span>{{ z.tekst }}{% if z.kategoriya %} <span class="teg">{{ z.kategoriya }}</span>{% endif %}</span>
+            <a href="/toggle/{{ z.nomer }}" class="btn btn-toggle">{{ 'Вернуть' if z.sdelano else 'Готово' }}</a>
+            <a href="#" class="btn btn-edit" onclick="redakt({{ z.nomer }}, '{{ z.tekst }}', '{{ z.kategoriya }}'); return false;">Изменить</a>
+            <a href="/delete/{{ z.nomer }}" class="btn btn-delete">Удалить</a>
         </li>
         {% else %}
         <li>Пока нет задач. Добавьте первую!</li>
         {% endfor %}
     </ul>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2>Редактировать</h2>
+            <form action="" method="post" id="edit-form">
+                <input type="text" name="task" id="edit-task" required>
+                <input type="text" name="kategoriya" id="edit-kat" placeholder="Категория" class="input-kat">
+                <button type="submit" class="btn-add">Сохранить</button>
+                <button type="button" class="btn btn-delete" onclick="zakryt();">Отмена</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function redakt(n, tekst, kat) {
+            document.getElementById("edit-form").action = "/edit/" + n;
+            document.getElementById("edit-task").value = tekst;
+            document.getElementById("edit-kat").value = kat;
+            document.getElementById("modal").style.display = "flex";
+        }
+        function zakryt() {
+            document.getElementById("modal").style.display = "none";
+        }
+    </script>
 </body>
 </html>
